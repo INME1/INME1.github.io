@@ -1,0 +1,22 @@
+<div id="sidebar-categories">
+    {% assign groups = "Basics,ML-DL,Projects" | split: "," %}
+    
+    {% for group in groups %}
+      <h2>{{ group }}</h2>
+      <ul>
+        {% assign sorted = site.categories | where_exp: "item", "item[0] contains group" %}
+        {% for category in sorted %}
+          {% assign category_name = category[0] %}
+          {% assign posts = category[1] %}
+          {% if category_name != group %}
+            <li>
+              <a href="{{ site.baseurl }}/categories/{{ category_name | downcase | replace: ' ', '-' }}/">
+                {{ category_name | remove: group | strip }} ({{ posts | size }})
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endfor %}
+  </div>
+  
